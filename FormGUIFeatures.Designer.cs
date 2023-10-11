@@ -53,9 +53,12 @@
             this.checkBoxMount = new System.Windows.Forms.CheckBox();
             this.checkBoxCruise = new System.Windows.Forms.CheckBox();
             this.checkBoxUSB = new System.Windows.Forms.CheckBox();
+            this.statusStripMsg = new System.Windows.Forms.StatusStrip();
+            this.ErrorMsg = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBoxManufacturer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEngine)).BeginInit();
             this.groupBoxAccessories.SuspendLayout();
+            this.statusStripMsg.SuspendLayout();
             this.SuspendLayout();
             // 
             // TextBoxBikeModel
@@ -325,11 +328,28 @@
             this.checkBoxUSB.Text = "USB";
             this.checkBoxUSB.UseVisualStyleBackColor = true;
             // 
+            // statusStripMsg
+            // 
+            this.statusStripMsg.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ErrorMsg});
+            this.statusStripMsg.Location = new System.Drawing.Point(0, 318);
+            this.statusStripMsg.Name = "statusStripMsg";
+            this.statusStripMsg.Size = new System.Drawing.Size(644, 22);
+            this.statusStripMsg.TabIndex = 13;
+            this.statusStripMsg.Text = "statusStrip1";
+            // 
+            // ErrorMsg
+            // 
+            this.ErrorMsg.Name = "ErrorMsg";
+            this.ErrorMsg.Size = new System.Drawing.Size(88, 17);
+            this.ErrorMsg.Text = "Status Message";
+            // 
             // FormGUIFeatures
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(644, 340);
+            this.Controls.Add(this.statusStripMsg);
             this.Controls.Add(this.groupBoxAccessories);
             this.Controls.Add(this.ButtonFindBike);
             this.Controls.Add(this.ButtonOpen);
@@ -350,6 +370,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEngine)).EndInit();
             this.groupBoxAccessories.ResumeLayout(false);
             this.groupBoxAccessories.PerformLayout();
+            this.statusStripMsg.ResumeLayout(false);
+            this.statusStripMsg.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -382,6 +404,8 @@
         private System.Windows.Forms.CheckBox checkBoxMount;
         private System.Windows.Forms.CheckBox checkBoxCruise;
         private System.Windows.Forms.CheckBox checkBoxUSB;
+        private System.Windows.Forms.StatusStrip statusStripMsg;
+        private System.Windows.Forms.ToolStripStatusLabel ErrorMsg;
     }
 }
 

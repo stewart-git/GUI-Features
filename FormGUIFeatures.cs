@@ -85,14 +85,16 @@ namespace GUI_Features
                 }
                 else
                 {
-                    MessageBox.Show("Cannot find bike", "Not Found Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // MessageBox.Show("Cannot find bike", "Not Found Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ErrorMsg.Text = "Cannot find that bike";
                     TextBoxBikeModel.Clear();
                     TextBoxBikeModel.Focus();
                 }
             }
             else
             {
-                MessageBox.Show("Please enter Bike Model into Text box", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // MessageBox.Show("Please enter Bike Model into Text box", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorMsg.Text = "Please enter Bike Model into Text box";
                 TextBoxBikeModel.Clear();
                 TextBoxBikeModel.Focus();
             }
@@ -194,7 +196,8 @@ namespace GUI_Features
             }
             catch (IOException)
             {
-                MessageBox.Show("Could not save Bike information","Critical Save Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                // MessageBox.Show("Could not save Bike information","Critical Save Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                ErrorMsg.Text = "Could not save Bike information";
             }
         }
         private void ButtonOpen_Click(object sender, EventArgs e)
@@ -232,7 +235,8 @@ namespace GUI_Features
             }
             catch (IOException)
             {
-                MessageBox.Show("Could not open Bike information", "Critical Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // MessageBox.Show("Could not open Bike information", "Critical Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorMsg.Text = "Could not open Bike information";
             }
         }
     }
