@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -38,22 +39,39 @@ namespace GUI_Features
                 ClearResetInput();
             }
         }
-        // Check for duplicate values in the Model field
         private bool DuplicateCheck(string newModel)
         {
+            // Check for duplicate values in the Model field
             if (motorBikeList.Exists(CheckModel => CheckModel.GetModel() == newModel))
                 return false;
             else
                 return true;
         }
-        // Check if all fields have suitable values
         private bool InputOK()
         {
-            if(!string.IsNullOrEmpty(TextBoxBikeModel.Text)
+            // Check if fields have suitable values
+            if (!string.IsNullOrEmpty(TextBoxBikeModel.Text)
                 && !string.IsNullOrEmpty(ComboBoxStyle.Text))
                 return true;
             else
                 return false;
+        }
+        private void ListViewBikeDisplay_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            DialogResult delRecord = MessageBox.Show("Are you sure you want to delete", "Confirmation",
+                              MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (delRecord == DialogResult.Yes)
+            {
+                int selectedBike = ListViewBikeDisplay.SelectedIndices[0];
+                motorBikeList.RemoveAt(selectedBike);
+                ClearResetInput();
+                DisplayAllBikes();
+                ErrorMsg.Text = "One record was deleted";
+            }
+            else
+            {
+                ErrorMsg.Text = "Record was NOT deleted";
+            }
         }
         private void DisplayAllBikes()
         {
@@ -91,6 +109,22 @@ namespace GUI_Features
             SetManufacturerRadioButton(selectedBike);
             numericUpDownEngine.Value = motorBikeList[selectedBike].GetCapacity();
             SetAccessoriesCheckBox(selectedBike);
+        }
+        private void ButtonUpdate_Click(object sender, EventArgs e)
+        {
+            if (InputOK() && (ListViewBikeDisplay.SelectedItems.Count > 0))
+            {
+                int selectedBike = ListViewBikeDisplay.SelectedIndices[0];
+                motorBikeList[selectedBike].SetModel(TextBoxBikeModel.Text);
+                motorBikeList[selectedBike].SetManufacturer(GetManufacturerRadioButton());
+                motorBikeList[selectedBike].SetStyle(ComboBoxStyle.Text);
+                motorBikeList[selectedBike].SetCapacity((int)numericUpDownEngine.Value);
+                motorBikeList[selectedBike].SetAccessories(GetAccessoriesCheckBox());
+                ClearResetInput();
+                DisplayAllBikes();
+            }
+            else
+                ErrorMsg.Text = "Select a record to update";
         }
         private void ButtonFindBike_Click(object sender, EventArgs e)
         {
@@ -264,6 +298,54 @@ namespace GUI_Features
             {
                 // MessageBox.Show("Could not open Bike information", "Critical Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ErrorMsg.Text = "Could not open Bike information";
+            }
+        }
+        private void TextBoxBikeModel_DoubleClick(object sender, EventArgs e)
+        {
+            ClearResetInput();
+        }
+        private void ButtonTheme_Click(object sender, EventArgs e)
+        {
+            if (ButtonTheme.Text == "Light")
+                ChangeMode("Nature");
+            else
+                ChangeMode("Light");
+        }
+        private void ChangeMode(string mode)
+        {
+            if (mode == "Light")
+            {
+                ButtonTheme.Text = "Light";             
+                foreach(Control c in this.Controls)
+                {
+                    Button btn = c as Button;
+                    if(btn != null)
+                    {
+                        btn.BackColor = Color.WhiteSmoke;
+                        btn.ForeColor = Color.Black;
+                    }
+                }
+                groupBoxAccessories.BackColor = Color.Lavender;
+                groupBoxManufacturer.BackColor = Color.Lavender;
+                ListViewBikeDisplay.BackColor = Color.Lavender;
+                this.BackColor = Color.White;
+            }
+            if (mode == "Nature")
+            {
+                ButtonTheme.Text = "Nature";
+                foreach (Control c in this.Controls)
+                {
+                    Button btn = c as Button;
+                    if (btn != null)
+                    {
+                        btn.BackColor = Color.DarkSeaGreen;
+                        btn.ForeColor = Color.Black;
+                    }
+                }
+                groupBoxAccessories.BackColor = Color.AliceBlue;
+                groupBoxManufacturer.BackColor = Color.AliceBlue;
+                ListViewBikeDisplay.BackColor = Color.AliceBlue;
+                this.BackColor = Color.Honeydew;
             }
         }
     }

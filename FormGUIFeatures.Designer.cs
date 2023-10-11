@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.TextBoxBikeModel = new System.Windows.Forms.TextBox();
             this.labelBikeModel = new System.Windows.Forms.Label();
             this.groupBoxManufacturer = new System.Windows.Forms.GroupBox();
@@ -55,6 +56,9 @@
             this.checkBoxUSB = new System.Windows.Forms.CheckBox();
             this.statusStripMsg = new System.Windows.Forms.StatusStrip();
             this.ErrorMsg = new System.Windows.Forms.ToolStripStatusLabel();
+            this.FormToolTips = new System.Windows.Forms.ToolTip(this.components);
+            this.ButtonUpdate = new System.Windows.Forms.Button();
+            this.ButtonTheme = new System.Windows.Forms.Button();
             this.groupBoxManufacturer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEngine)).BeginInit();
             this.groupBoxAccessories.SuspendLayout();
@@ -67,6 +71,8 @@
             this.TextBoxBikeModel.Name = "TextBoxBikeModel";
             this.TextBoxBikeModel.Size = new System.Drawing.Size(121, 20);
             this.TextBoxBikeModel.TabIndex = 0;
+            this.FormToolTips.SetToolTip(this.TextBoxBikeModel, "Enter Model to add or search. Double Click to Clear");
+            this.TextBoxBikeModel.DoubleClick += new System.EventHandler(this.TextBoxBikeModel_DoubleClick);
             // 
             // labelBikeModel
             // 
@@ -162,6 +168,7 @@
             this.ComboBoxStyle.Size = new System.Drawing.Size(121, 21);
             this.ComboBoxStyle.Sorted = true;
             this.ComboBoxStyle.TabIndex = 3;
+            this.FormToolTips.SetToolTip(this.ComboBoxStyle, "Select a Motor Bike Style");
             // 
             // labelStyle
             // 
@@ -222,9 +229,11 @@
             this.ListViewBikeDisplay.Name = "ListViewBikeDisplay";
             this.ListViewBikeDisplay.Size = new System.Drawing.Size(374, 238);
             this.ListViewBikeDisplay.TabIndex = 7;
+            this.FormToolTips.SetToolTip(this.ListViewBikeDisplay, "Single Click to VIEW or Double Click to DELETE");
             this.ListViewBikeDisplay.UseCompatibleStateImageBehavior = false;
             this.ListViewBikeDisplay.View = System.Windows.Forms.View.Details;
             this.ListViewBikeDisplay.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListViewBikeDisplay_MouseClick);
+            this.ListViewBikeDisplay.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListViewBikeDisplay_MouseDoubleClick);
             // 
             // columnHeaderBikeModel
             // 
@@ -250,39 +259,43 @@
             // 
             this.ButtonAddNewBike.Location = new System.Drawing.Point(13, 256);
             this.ButtonAddNewBike.Name = "ButtonAddNewBike";
-            this.ButtonAddNewBike.Size = new System.Drawing.Size(120, 35);
+            this.ButtonAddNewBike.Size = new System.Drawing.Size(120, 29);
             this.ButtonAddNewBike.TabIndex = 8;
             this.ButtonAddNewBike.Text = "Add New Bike";
+            this.FormToolTips.SetToolTip(this.ButtonAddNewBike, "Add new Bike");
             this.ButtonAddNewBike.UseVisualStyleBackColor = true;
             this.ButtonAddNewBike.Click += new System.EventHandler(this.ButtonAddNewBike_Click);
             // 
             // ButtonSave
             // 
-            this.ButtonSave.Location = new System.Drawing.Point(330, 262);
+            this.ButtonSave.Location = new System.Drawing.Point(464, 262);
             this.ButtonSave.Name = "ButtonSave";
             this.ButtonSave.Size = new System.Drawing.Size(75, 23);
             this.ButtonSave.TabIndex = 9;
             this.ButtonSave.Text = "Save";
+            this.FormToolTips.SetToolTip(this.ButtonSave, "Save all data to Binary File");
             this.ButtonSave.UseVisualStyleBackColor = true;
             this.ButtonSave.Click += new System.EventHandler(this.ButtonSave_Click);
             // 
             // ButtonOpen
             // 
-            this.ButtonOpen.Location = new System.Drawing.Point(411, 262);
+            this.ButtonOpen.Location = new System.Drawing.Point(545, 262);
             this.ButtonOpen.Name = "ButtonOpen";
             this.ButtonOpen.Size = new System.Drawing.Size(75, 23);
             this.ButtonOpen.TabIndex = 10;
             this.ButtonOpen.Text = "Open";
+            this.FormToolTips.SetToolTip(this.ButtonOpen, "Open Binary File");
             this.ButtonOpen.UseVisualStyleBackColor = true;
             this.ButtonOpen.Click += new System.EventHandler(this.ButtonOpen_Click);
             // 
             // ButtonFindBike
             // 
-            this.ButtonFindBike.Location = new System.Drawing.Point(249, 262);
+            this.ButtonFindBike.Location = new System.Drawing.Point(383, 262);
             this.ButtonFindBike.Name = "ButtonFindBike";
             this.ButtonFindBike.Size = new System.Drawing.Size(75, 23);
             this.ButtonFindBike.TabIndex = 11;
             this.ButtonFindBike.Text = "Find Bike";
+            this.FormToolTips.SetToolTip(this.ButtonFindBike, "Click to Search for a Model");
             this.ButtonFindBike.UseVisualStyleBackColor = true;
             this.ButtonFindBike.Click += new System.EventHandler(this.ButtonFindBike_Click);
             // 
@@ -343,11 +356,33 @@
             this.ErrorMsg.Name = "ErrorMsg";
             this.ErrorMsg.Size = new System.Drawing.Size(0, 17);
             // 
+            // ButtonUpdate
+            // 
+            this.ButtonUpdate.Location = new System.Drawing.Point(142, 256);
+            this.ButtonUpdate.Name = "ButtonUpdate";
+            this.ButtonUpdate.Size = new System.Drawing.Size(75, 29);
+            this.ButtonUpdate.TabIndex = 14;
+            this.ButtonUpdate.Text = "Update";
+            this.ButtonUpdate.UseVisualStyleBackColor = true;
+            this.ButtonUpdate.Click += new System.EventHandler(this.ButtonUpdate_Click);
+            // 
+            // ButtonTheme
+            // 
+            this.ButtonTheme.Location = new System.Drawing.Point(263, 262);
+            this.ButtonTheme.Name = "ButtonTheme";
+            this.ButtonTheme.Size = new System.Drawing.Size(75, 23);
+            this.ButtonTheme.TabIndex = 15;
+            this.ButtonTheme.Text = "Mode";
+            this.ButtonTheme.UseVisualStyleBackColor = true;
+            this.ButtonTheme.Click += new System.EventHandler(this.ButtonTheme_Click);
+            // 
             // FormGUIFeatures
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(644, 340);
+            this.Controls.Add(this.ButtonTheme);
+            this.Controls.Add(this.ButtonUpdate);
             this.Controls.Add(this.statusStripMsg);
             this.Controls.Add(this.groupBoxAccessories);
             this.Controls.Add(this.ButtonFindBike);
@@ -405,6 +440,9 @@
         private System.Windows.Forms.CheckBox checkBoxUSB;
         private System.Windows.Forms.StatusStrip statusStripMsg;
         private System.Windows.Forms.ToolStripStatusLabel ErrorMsg;
+        private System.Windows.Forms.ToolTip FormToolTips;
+        private System.Windows.Forms.Button ButtonUpdate;
+        private System.Windows.Forms.Button ButtonTheme;
     }
 }
 
