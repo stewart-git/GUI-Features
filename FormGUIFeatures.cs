@@ -4,7 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-// Ivan 08/09/2022
+// Ivan 08/09/2022            
+// Some error trapping in the MotorBike class and on the Form.
+// Needs further testing.
 namespace GUI_Features
 {
     public partial class FormGUIFeatures : Form
@@ -17,30 +19,55 @@ namespace GUI_Features
 
         private void ButtonAddNewBike_Click(object sender, EventArgs e)
         {
-            // error trapping in the MotorBike class and on the Form
-            MotorBike addBike = new MotorBike();
-            addBike.SetModel(TextBoxBikeModel.Text);
-            addBike.SetManufacturer(GetManufacturerRadioButton());
-            addBike.SetStyle(ComboBoxStyle.Text);
-            addBike.SetCapacity((int)numericUpDownEngine.Value);
-            addBike.SetAccessories(GetAccessoriesCheckBox());
-            motorBikeList.Add(addBike);
-            DisplayAllBikes();
-            ClearResetInput();
+
+            if (DuplicateCheck(TextBoxBikeModel.Text) && InputOK())
+            {
+                MotorBike addBike = new MotorBike();
+                addBike.SetModel(TextBoxBikeModel.Text);
+                addBike.SetManufacturer(GetManufacturerRadioButton());
+                addBike.SetStyle(ComboBoxStyle.Text);
+                addBike.SetCapacity((int)numericUpDownEngine.Value);
+                addBike.SetAccessories(GetAccessoriesCheckBox());
+                motorBikeList.Add(addBike);
+                DisplayAllBikes();
+                ClearResetInput();
+            }
+            else
+            {
+                ErrorMsg.Text = "Your cannot add duplicate Models";
+                ClearResetInput();
+            }
+        }
+        // Check for duplicate values in the Model field
+        private bool DuplicateCheck(string newModel)
+        {
+            if (motorBikeList.Exists(CheckModel => CheckModel.GetModel() == newModel))
+                return false;
+            else
+                return true;
+        }
+        // Check if all fields have suitable values
+        private bool InputOK()
+        {
+            if(!string.IsNullOrEmpty(TextBoxBikeModel.Text)
+                && !string.IsNullOrEmpty(ComboBoxStyle.Text))
+                return true;
+            else
+                return false;
         }
         private void DisplayAllBikes()
         {
             ListViewBikeDisplay.Items.Clear();
             motorBikeList.Sort(); // sort implmented in the class
-            foreach(var bike in motorBikeList)
+            foreach (var bike in motorBikeList)
             {   // no accessory displayed.
                 ListViewItem lvi = new ListViewItem(bike.GetModel());
                 lvi.SubItems.Add(bike.GetManufacturer());
                 lvi.SubItems.Add(bike.GetStyle());
-                lvi.SubItems.Add(bike.GetCapacity().ToString()); 
+                lvi.SubItems.Add(bike.GetCapacity().ToString());
                 ListViewBikeDisplay.Items.Add(lvi);
             }
-        }      
+        }
         private void ClearResetInput()
         {
             TextBoxBikeModel.Clear();
@@ -55,7 +82,7 @@ namespace GUI_Features
             {
                 cb.Checked = false;
             }
-        }        
+        }
         private void ListViewBikeDisplay_MouseClick(object sender, MouseEventArgs e)
         {
             int selectedBike = ListViewBikeDisplay.SelectedIndices[0];
@@ -94,19 +121,19 @@ namespace GUI_Features
             else
             {
                 // MessageBox.Show("Please enter Bike Model into Text box", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                ErrorMsg.Text = "Please enter Bike Model into Text box";
+                ErrorMsg.Text = "Please enter Bike Model into text box";
                 TextBoxBikeModel.Clear();
                 TextBoxBikeModel.Focus();
             }
-        }        
+        }
         private string GetManufacturerRadioButton()
         {
             string rbValue = "";
-            foreach(RadioButton rb in groupBoxManufacturer.Controls.OfType<RadioButton>())
+            foreach (RadioButton rb in groupBoxManufacturer.Controls.OfType<RadioButton>())
             {
                 if (rb.Checked)
                 {
-                    rbValue =  rb.Text;
+                    rbValue = rb.Text;
                     break; // is this really needed?
                 }
                 else
@@ -114,7 +141,7 @@ namespace GUI_Features
                     rbValue = "Other";
                 }
             }
-           return rbValue;
+            return rbValue;
         }
         private void SetManufacturerRadioButton(int item)
         {
@@ -132,11 +159,11 @@ namespace GUI_Features
         }
         private string[] GetAccessoriesCheckBox()
         {
-            string[] accessory =  new string[3];
+            string[] accessory = new string[3];
             int x = 0;
             foreach (CheckBox cb in groupBoxAccessories.Controls.OfType<CheckBox>())
             {
-                if(cb.Checked == true)
+                if (cb.Checked == true)
                 {
                     accessory[x] = cb.Text;
                 }
@@ -189,7 +216,7 @@ namespace GUI_Features
                             writer.Write(bike.GetManufacturer());
                             writer.Write(bike.GetStyle());
                             writer.Write(bike.GetCapacity());
-                            writer.Write(string.Join(",",bike.GetAccessories()));
+                            writer.Write(string.Join(",", bike.GetAccessories()));
                         }
                     }
                 }

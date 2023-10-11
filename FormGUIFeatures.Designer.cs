@@ -341,8 +341,7 @@
             // ErrorMsg
             // 
             this.ErrorMsg.Name = "ErrorMsg";
-            this.ErrorMsg.Size = new System.Drawing.Size(88, 17);
-            this.ErrorMsg.Text = "Status Message";
+            this.ErrorMsg.Size = new System.Drawing.Size(0, 17);
             // 
             // FormGUIFeatures
             // 
